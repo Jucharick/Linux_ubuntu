@@ -23,3 +23,116 @@ TLS (transport layer security — Протокол защиты транспор
 
 СУБД – система управления базами данных, комплекс ПО для работы с базами
 данных определённого типа (например, реляционными).
+
+
+
+Консольные утилиты для веб
+
+● Получить URL в консоли:
+    ○ curl -L https://ya.ru/
+    ○ wget https://yastatic.net/jquery/2.1.4/jquery.min.js
+
+
+Протоколы SSL/TLS и HTTPS
+
+● SSL — первые версии защищенного протокола
+● TLS – современный протокол
+● HTTPS – работа протокола HTTP поверх защищенного
+канала SSL/TLS
+● HTTP/2, HTTP/3 – по умолчанию используют
+защищенный вариант
+
+
+Преимущества HTTPS
+
+● Трафик шифруется при передаче
+    ○ Нет перехвата данных
+    ○ Нельзя изменить содержимое
+● Подтверждение соответствия сервера домену
+● Надежная доставка через цепочку хостов
+● Поддержка новейших веб-технологий
+
+
+################################################
+Nginx
+
+● Самый популярный сервер в мире
+● Высокая производительность
+● Масштабируемость по количеству подключений
+● Открытый продукт (коммерческий Nginx Plus)
+● Широкая функциональность
+● Модульная архитектура
+● Поддержка новых технологий
+● Используется как сервер для статики, прокси, кэширующий сервер
+● Не исполняет серверный код веб-приложения
+● Разработчик первых версий: Игорь Сысоев
+
+
+Конфигурация Nginx 
+
+● Установка: sudo apt install nginx
+● Тестирование конфигурации: sudo nginx -t
+● Применить: sudo systemctl reload nginx
+● Конфигурация: /etc/nginx/*
+● Основной файл: /etc/nginx/nginx.conf
+● Блоки: server {}
+● Директивы: server_name site.ru;
+● Переменные: $uri
+● Документация: http://nginx.org/ru/docs/
+
+
+Пример конфигурации Nginx
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+    server_name _;
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+
+
+################################################
+Веб-сервер Apache
+
+● Популярный веб-сервер
+● Открытый продукт
+● Максимальная функциональность
+● Модульная архитектура
+● Разные режимы работы (MPM – prefork, event…)
+● Плохая масштабируемость по соединениям (prefork)
+● Возможность исполнения серверного кода (модули)
+● Исполняет роль backend-сервера
+● Документация: https://httpd.apache.org/docs/2.4/en/
+
+
+Конфигурация Apache 
+
+● Установка: sudo apt install apache2
+● Тестирование конфигурации: sudo apachectl -t
+● Применить: sudo systemctl reload apache2
+● Конфигурация: /etc/apache2/*
+● Основной файл: /etc/apache2/apache2.conf
+● Блоки: <VirtualHost></VirtualHost>
+● Директивы: ServerName site.ru
+● Документация: https://httpd.apache.org/docs/2.4/en/
+
+
+Пример конфигурации Apache
+
+Listen 8081
+<VirtualHost *:8081>
+    ServerName www.example.com
+
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html
+
+    ErrorLog /var/log/httpd/error.log
+    CustomLog /var/log/httpd/access.log combined
+</VirtualHost>
+
+
